@@ -65,6 +65,26 @@
   <h2>Histórico</h2><div id="lista"></div>
 </section>
 
+<dialog id="editDialog">
+<form id="editForm">
+  <h3>Editar lançamento</h3>
+  <input id="editOriginalData" type="hidden">
+  <label>Data<input id="editData" type="date" required></label>
+  <div class="two">
+    <label>Horas trabalhadas<input id="editHoras" type="number" step=".01" min="0" required></label>
+    <label>KM rodados<input id="editKm" type="number" step=".1" min="0" required></label>
+  </div>
+  <label>Faturamento (R$)<input id="editFat" type="number" step=".01" min="0" required></label>
+  <label>Bateria para recarregar (%)<input id="editBat" type="number" step="1" min="0" max="100"></label>
+  <label>Outros custos (R$)<input id="editOutros" type="number" step=".01" min="0"></label>
+  <label>Observação<textarea id="editObs" rows="3"></textarea></label>
+  <div class="dialogActions">
+    <button type="button" id="cancelEdit" class="ghost">Cancelar</button>
+    <button type="submit" class="primary">Salvar alterações</button>
+  </div>
+</form>
+</dialog>
+
 <section id="config" class="page">
   <h2>Configurações</h2>
   <form id="configForm">
