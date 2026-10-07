@@ -46,7 +46,15 @@ function drawBarsLine(id,labels,bars,line){
  x.font='10px system-ui';x.fillStyle='#6b7280';x.strokeStyle='#e5e7eb';
  for(let i=0;i<=4;i++){let y=pad.t+ph*i/4;x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(moneyShort(max*(1-i/4)),2,y+3)}
  const slot=pw/Math.max(1,labels.length),bw=Math.max(4,slot*.55);
- bars.forEach((v,i)=>{let px=pad.l+i*slot+(slot-bw)/2,py=pad.t+ph-(v/max)*ph;x.fillStyle='#4472C4';x.fillRect(px,py,bw,pad.t+ph-py)});
+ bars.forEach((v,i)=>{
+ let px=pad.l+i*slot+(slot-bw)/2,py=pad.t+ph-(v/max)*ph;
+ x.fillStyle='#4472C4';x.fillRect(px,py,bw,pad.t+ph-py);
+ if(v>0){
+   const txt=moneyShort(v);
+   x.save();x.font='bold 10px system-ui';x.fillStyle='#1F4E78';x.textAlign='center';
+   x.fillText(txt,px+bw/2,Math.max(12,py-5));x.restore();
+ }
+});
  x.strokeStyle='#1F4E78';x.lineWidth=2.5;x.beginPath();line.forEach((v,i)=>{let px=pad.l+i*slot+slot/2,py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
  let every=Math.max(1,Math.ceil(labels.length/6));labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){x.fillStyle='#6b7280';x.fillText(lab,pad.l+i*slot,h-8)}});
 }
