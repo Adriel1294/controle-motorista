@@ -23,6 +23,24 @@ function drawLines(id,labels,series){
  series.forEach((s,si)=>{x.strokeStyle=si===0?'#111827':'#9ca3af';x.lineWidth=si===0?2.5:1.5;x.setLineDash(si===0?[]:[6,5]);x.beginPath();s.values.forEach((v,i)=>{let px=pad.l+(labels.length>1?i*step:pw/2),py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();x.setLineDash([])});
  let every=Math.max(1,Math.ceil(labels.length/6));labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){let px=pad.l+(labels.length>1?i*step:pw/2);x.fillStyle='#6b7280';x.fillText(lab,px-7,h-8)}});
 }
+
+function drawGroupedBars(id,labels,a,b){
+ const {x,w,h}=setupCanvas(id),pad={l:48,r:10,t:28,b:38},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ let max=Math.max(1,...a,...b)*1.08;
+ x.font='10px system-ui';x.fillStyle='#6b7280';x.strokeStyle='#e5e7eb';x.lineWidth=1;
+ for(let i=0;i<=4;i++){let y=pad.t+ph*i/4;x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(moneyShort(max*(1-i/4)),2,y+3)}
+ const slot=pw/Math.max(1,labels.length),bw=Math.max(3,Math.min(10,slot*.34));
+ a.forEach((v,i)=>{
+   let base=pad.l+i*slot+slot/2,py=pad.t+ph-(v/max)*ph;
+   x.fillStyle='#1f2937';x.fillRect(base-bw-1,py,bw,pad.t+ph-py);
+   let py2=pad.t+ph-(b[i]/max)*ph;x.fillStyle='#9ca3af';x.fillRect(base+1,py2,bw,pad.t+ph-py2);
+ });
+ // legend
+ x.fillStyle='#1f2937';x.fillRect(pad.l,5,10,10);x.fillStyle='#374151';x.fillText('Faturamento',pad.l+15,14);
+ x.fillStyle='#9ca3af';x.fillRect(pad.l+92,5,10,10);x.fillStyle='#374151';x.fillText('Meta diária',pad.l+107,14);
+ let every=Math.max(1,Math.ceil(labels.length/10));
+ labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){let px=pad.l+i*slot+slot/2;x.save();x.translate(px,h-8);x.rotate(-Math.PI/4);x.fillStyle='#6b7280';x.fillText(lab,0,0);x.restore()}});
+}
 function drawBarsLine(id,labels,bars,line){
  const {x,w,h}=setupCanvas(id),pad={l:48,r:10,t:12,b:32},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b,max=Math.max(1,...bars,...line)*1.08;
  x.font='10px system-ui';x.fillStyle='#6b7280';x.strokeStyle='#e5e7eb';
@@ -37,7 +55,7 @@ async function renderCharts(){
  const map=new Map(allJ.filter(z=>z.data.startsWith(key(sel))).map(z=>[z.data,z]));
  let labels=[],fat=[],meta=[],ac=[],mac=[],sa=0,sm=0;
  for(let d=1;d<=dm;d++){let dt=new Date(y,m,d),r=map.get(iso(y,m,d)),f=r?num(r.faturamento):0,me=num(metas[dt.getDay()]);sa+=f;sm+=me;labels.push(String(d));fat.push(f);meta.push(me);ac.push(sa);mac.push(sm)}
- drawLines('grafDiario',labels,[{values:fat},{values:meta}]);drawLines('grafAcumulado',labels,[{values:ac},{values:mac}]);
+ drawGroupedBars('grafDiario',labels.map(d=>String(d).padStart(2,'0')+'/'+String(m+1).padStart(2,'0')),fat,meta);drawLines('grafAcumulado',labels,[{values:ac},{values:mac}]);
  const monthly=new Map();allJ.forEach(r=>{let k=r.data.slice(0,7);monthly.set(k,(monthly.get(k)||0)+num(r.faturamento))});
  let keys=[...monthly.keys()].sort(),labs=[],bars=[],acc=[],sum=0;keys.forEach(k=>{sum+=monthly.get(k);let [yy,mm]=k.split('-');labs.push(mm+'/'+yy.slice(2));bars.push(monthly.get(k));acc.push(sum)});
  drawBarsLine('grafMensal',labs,bars,acc);
