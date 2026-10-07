@@ -20,7 +20,7 @@ function drawLines(id,labels,series){
  x.font='10px system-ui';x.fillStyle='#6b7280';x.strokeStyle='#e5e7eb';x.lineWidth=1;
  for(let i=0;i<=4;i++){let y=pad.t+ph*i/4;x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();let val=max*(1-i/4);x.fillText(moneyShort(val),2,y+3)}
  const step=labels.length>1?pw/(labels.length-1):pw;
- series.forEach((s,si)=>{x.strokeStyle=si===0?'#111827':'#9ca3af';x.lineWidth=si===0?2.5:1.5;x.setLineDash(si===0?[]:[6,5]);x.beginPath();s.values.forEach((v,i)=>{let px=pad.l+(labels.length>1?i*step:pw/2),py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();x.setLineDash([])});
+ series.forEach((s,si)=>{x.strokeStyle=si===0?'#4472C4':'#ED7D31';x.lineWidth=si===0?2.5:1.5;x.setLineDash(si===0?[]:[6,5]);x.beginPath();s.values.forEach((v,i)=>{let px=pad.l+(labels.length>1?i*step:pw/2),py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();x.setLineDash([])});
  let every=Math.max(1,Math.ceil(labels.length/6));labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){let px=pad.l+(labels.length>1?i*step:pw/2);x.fillStyle='#6b7280';x.fillText(lab,px-7,h-8)}});
 }
 
@@ -32,12 +32,12 @@ function drawGroupedBars(id,labels,a,b){
  const slot=pw/Math.max(1,labels.length),bw=Math.max(3,Math.min(10,slot*.34));
  a.forEach((v,i)=>{
    let base=pad.l+i*slot+slot/2,py=pad.t+ph-(v/max)*ph;
-   x.fillStyle='#1f2937';x.fillRect(base-bw-1,py,bw,pad.t+ph-py);
-   let py2=pad.t+ph-(b[i]/max)*ph;x.fillStyle='#9ca3af';x.fillRect(base+1,py2,bw,pad.t+ph-py2);
+   x.fillStyle='#4472C4';x.fillRect(base-bw-1,py,bw,pad.t+ph-py);
+   let py2=pad.t+ph-(b[i]/max)*ph;x.fillStyle='#ED7D31';x.fillRect(base+1,py2,bw,pad.t+ph-py2);
  });
  // legend
- x.fillStyle='#1f2937';x.fillRect(pad.l,5,10,10);x.fillStyle='#374151';x.fillText('Faturamento',pad.l+15,14);
- x.fillStyle='#9ca3af';x.fillRect(pad.l+92,5,10,10);x.fillStyle='#374151';x.fillText('Meta diária',pad.l+107,14);
+ x.fillStyle='#4472C4';x.fillRect(pad.l,5,10,10);x.fillStyle='#374151';x.fillText('Faturamento',pad.l+15,14);
+ x.fillStyle='#ED7D31';x.fillRect(pad.l+92,5,10,10);x.fillStyle='#374151';x.fillText('Meta diária',pad.l+107,14);
  let every=Math.max(1,Math.ceil(labels.length/10));
  labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){let px=pad.l+i*slot+slot/2;x.save();x.translate(px,h-8);x.rotate(-Math.PI/4);x.fillStyle='#6b7280';x.fillText(lab,0,0);x.restore()}});
 }
@@ -46,8 +46,8 @@ function drawBarsLine(id,labels,bars,line){
  x.font='10px system-ui';x.fillStyle='#6b7280';x.strokeStyle='#e5e7eb';
  for(let i=0;i<=4;i++){let y=pad.t+ph*i/4;x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(moneyShort(max*(1-i/4)),2,y+3)}
  const slot=pw/Math.max(1,labels.length),bw=Math.max(4,slot*.55);
- bars.forEach((v,i)=>{let px=pad.l+i*slot+(slot-bw)/2,py=pad.t+ph-(v/max)*ph;x.fillStyle='#d1d5db';x.fillRect(px,py,bw,pad.t+ph-py)});
- x.strokeStyle='#111827';x.lineWidth=2.5;x.beginPath();line.forEach((v,i)=>{let px=pad.l+i*slot+slot/2,py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
+ bars.forEach((v,i)=>{let px=pad.l+i*slot+(slot-bw)/2,py=pad.t+ph-(v/max)*ph;x.fillStyle='#4472C4';x.fillRect(px,py,bw,pad.t+ph-py)});
+ x.strokeStyle='#1F4E78';x.lineWidth=2.5;x.beginPath();line.forEach((v,i)=>{let px=pad.l+i*slot+slot/2,py=pad.t+ph-(v/max)*ph;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
  let every=Math.max(1,Math.ceil(labels.length/6));labels.forEach((lab,i)=>{if(i%every===0||i===labels.length-1){x.fillStyle='#6b7280';x.fillText(lab,pad.l+i*slot,h-8)}});
 }
 async function renderCharts(){

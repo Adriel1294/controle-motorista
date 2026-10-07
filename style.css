@@ -23,3 +23,31 @@ main{padding-bottom:12px}
  .chartCard{padding:12px}
  .chartCard h3{font-size:14px}
 }
+
+/* V2.6 - identidade visual baseada no Dashboard do Excel */
+:root{
+ --excel-navy:#1F4E78;
+ --excel-blue:#4472C4;
+ --excel-blue-soft:#D9E6F5;
+ --excel-orange:#ED7D31;
+ --excel-bg:#F4F7FB;
+ --excel-grid:#D9E0E8;
+}
+body{background:var(--excel-bg);color:#1f2937}
+header{background:var(--excel-navy)}
+.hero{border-top:5px solid var(--excel-blue);box-shadow:0 2px 8px rgba(31,78,120,.10)}
+.progress{background:#DCE6F1}.progress i{background:var(--excel-blue)}
+.grid article,.preview,.planSummary,.planDay,.item,.chartCard{
+ border:1px solid #D6DEE8;
+ box-shadow:0 2px 7px rgba(31,78,120,.07)
+}
+.grid .accent{border:2px solid var(--excel-blue);background:#F7FAFF}
+.primary{background:var(--excel-blue);color:#fff}
+.primary:active{background:var(--excel-navy)}
+.ghost{background:var(--excel-blue-soft);color:var(--excel-navy)}
+input:focus,textarea:focus,select:focus{outline:2px solid #9CB9E6;border-color:var(--excel-blue)}
+.sectionHead h2,.chartCard h3{color:var(--excel-navy)}
+nav{border-top:2px solid var(--excel-blue);background:#fff}
+nav button{color:#4b5563}
+nav button.active{background:var(--excel-blue);color:#fff}
+.editBtn{background:var(--excel-blue-soft);color:var(--excel-navy)}
