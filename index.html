@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>Controle Motorista</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div><small>CONTROLE MOTORISTA</small><h1 id="mesTitulo">Dashboard</h1></div>
+  <button id="btnMes" class="ghost">Mês</button>
+</header>
+
+<main>
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <div class="row"><span>Faturamento</span><strong id="fat">R$ 0,00</strong></div>
+    <div class="row"><span>Meta mensal</span><strong id="meta">R$ 6.500,00</strong></div>
+    <div class="progress"><i id="progress"></i></div>
+    <small id="pct">0% da meta</small>
+  </div>
+  <div class="grid">
+    <article><span>Lucro líquido</span><strong id="lucro">R$ 0,00</strong></article>
+    <article><span>R$/hora</span><strong id="rhora">R$ 0,00</strong></article>
+    <article><span>KM</span><strong id="km">0</strong></article>
+    <article><span>Horas</span><strong id="horas">0</strong></article>
+    <article><span>Dias trabalhados</span><strong id="dias">0</strong></article>
+    <article><span>Dias disponíveis</span><strong id="disp">0</strong></article>
+    <article><span>Meta prevista</span><strong id="metaPrev">R$ 0,00</strong></article>
+    <article class="accent"><span>Necessário/dia</span><strong id="necessario">R$ 0,00</strong></article>
+  </div>
+</section>
+
+<section id="registrar" class="page">
+  <h2>Registrar dia</h2>
+  <form id="form">
+    <label>Data<input id="data" type="date" required></label>
+    <div class="two">
+      <label>Horas trabalhadas<input id="horasIn" type="number" step=".01" min="0" required></label>
+      <label>KM rodados<input id="kmIn" type="number" step=".1" min="0" required></label>
+    </div>
+    <label>Faturamento (R$)<input id="fatIn" type="number" step=".01" min="0" required></label>
+    <label>Bateria para recarregar (%)<input id="batIn" type="number" step="1" min="0" max="100" value="0"></label>
+    <div class="preview"><span>Recarga estimada</span><strong id="recargaPreview">0,00 kWh · R$ 0,00</strong></div>
+    <label>Outros custos (R$)<input id="outrosIn" type="number" step=".01" min="0" value="0"></label>
+    <label>Observação<textarea id="obsIn" rows="3"></textarea></label>
+    <button class="primary" type="submit">Salvar dia</button>
+  </form>
+</section>
+
+<section id="planejamento" class="page">
+  <div class="sectionHead"><div><h2>Planejamento</h2><small id="planMes"></small></div><button id="todosSim" class="ghost">Todos SIM</button></div>
+  <div class="planSummary">
+    <div><span>Dias disponíveis restantes</span><strong id="planDisp">0</strong></div>
+    <div><span>Necessário/dia</span><strong id="planNec">R$ 0,00</strong></div>
+  </div>
+  <div id="planLista"></div>
+</section>
+
+<section id="historico" class="page">
+  <h2>Histórico</h2><div id="lista"></div>
+</section>
+
+<section id="config" class="page">
+  <h2>Configurações</h2>
+  <form id="configForm">
+    <label>Meta mensal (R$)<input id="metaIn" type="number" step=".01"></label>
+    <label>Capacidade da bateria (kWh)<input id="capIn" type="number" step=".1"></label>
+    <label>Tarifa de energia (R$/kWh)<input id="tarifaIn" type="number" step=".001"></label>
+    <h3>Metas por dia da semana</h3>
+    <div id="metasSemana"></div>
+    <button class="primary" type="submit">Salvar configurações</button>
+  </form>
+  <div class="backup">
+    <button id="exportar" class="ghost">Exportar backup</button>
+    <label class="ghost file">Restaurar backup<input id="importar" type="file" accept=".json,application/json"></label>
+  </div>
+</section>
+</main>
+
+<nav>
+<button data-page="dashboard">Painel</button>
+<button data-page="registrar">Registrar</button>
+<button data-page="planejamento">Planejar</button>
+<button data-page="historico">Histórico</button>
+<button data-page="config">Config</button>
+</nav>
+
+<dialog id="mesDialog"><form method="dialog"><h3>Selecionar mês</h3><input id="mesPicker" type="month"><button class="primary">Aplicar</button></form></dialog>
+<script src="app.js"></script>
+</body></html>
